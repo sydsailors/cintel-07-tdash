@@ -1,15 +1,25 @@
-
+# ---------------------------
+# Imports
+# ---------------------------
 import seaborn as sns
 from faicons import icon_svg
 from shiny import reactive
 from shiny.express import input, render, ui
 import palmerpenguins 
 
+# ---------------------------
+# Load dataset into DataFrame
+# ---------------------------
 df = palmerpenguins.load_penguins()
 
+# ---------------------------
+# UI sidebar
+# ---------------------------
 ui.page_opts(title="Penguins dashboard", fillable=True)
 
-
+# ---------------------------
+# Related links
+# ---------------------------
 with ui.sidebar(title="Filter controls"):
     ui.input_slider("mass", "Mass", 2000, 6000, 6000)
     ui.input_checkbox_group(
@@ -47,7 +57,9 @@ with ui.sidebar(title="Filter controls"):
         target="_blank",
     )
 
-
+# ---------------------------
+# UI setup
+# ---------------------------
 with ui.layout_column_wrap(fill=False):
     with ui.value_box(showcase=icon_svg("penguin")):
         "Penguin count"
@@ -72,6 +84,7 @@ with ui.layout_column_wrap(fill=False):
 
 
 with ui.layout_columns():
+    # Scatterplot showing relationship between bill length and depth
     with ui.card(full_screen=True):
         ui.card_header("Bill length and depth")
 
@@ -84,6 +97,7 @@ with ui.layout_columns():
                 hue="species",
             )
 
+    # Data grid 
     with ui.card(full_screen=True):
         ui.card_header("Penguin Data")
 
