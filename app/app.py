@@ -1,11 +1,13 @@
 # ---------------------------
 # Imports
 # ---------------------------
+import faicons as fa
 import seaborn as sns
 from faicons import icon_svg
 from shiny import reactive
 from shiny.express import input, render, ui
 import palmerpenguins
+from pathlib import Path
 
 # ---------------------------
 # Load dataset into DataFrame
@@ -57,25 +59,33 @@ with ui.sidebar(title="Filter controls"):
         target="_blank",
     )
 
+# ----------------------------------
+# Icons
+# ----------------------------------
+ICONS = {
+    "bird": fa.icon_svg("earlybirds"),
+    "length": fa.icon_svg("ruler-horizontal"),
+    "depth": fa.icon_svg("ruler-vertical"),
+}
 # ---------------------------
 # UI setup
 # ---------------------------
 with ui.layout_column_wrap(fill=False):
-    with ui.value_box(showcase=icon_svg("earlybirds")):
+    with ui.value_box(showcase=ICONS["bird"], theme="bg-gradient-purple-pink"):
         "Penguin count"
 
         @render.text
         def count():
             return filtered_df().shape[0]
 
-    with ui.value_box(showcase=icon_svg("ruler-horizontal")):
+    with ui.value_box(showcase=ICONS["length"], theme="bg-gradient-pink-purple"):
         "Average bill length"
 
         @render.text
         def bill_length():
             return f"{filtered_df()['bill_length_mm'].mean():.1f} mm"
 
-    with ui.value_box(showcase=icon_svg("ruler-vertical")):
+    with ui.value_box(showcase=ICONS["depth"], theme="bg-gradient-purple-pink"):
         "Average bill depth"
 
         @render.text
@@ -112,8 +122,8 @@ with ui.layout_columns():
             ]
             return render.DataGrid(filtered_df()[cols], filters=True)
 
-
-#ui.include_css(app_dir / "styles.css")
+app_dir = (Path(__file__).parent)
+ui.include_css(app_dir / "styles.css")
 
 
 @reactive.calc
