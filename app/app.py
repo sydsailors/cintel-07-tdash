@@ -61,7 +61,7 @@ with ui.sidebar(title="Filter controls"):
 # UI setup
 # ---------------------------
 with ui.layout_column_wrap(fill=False):
-    with ui.value_box(showcase=icon_svg("penguin")):
+    with ui.value_box(showcase=icon_svg("earlybirds")):
         "Penguin count"
 
         @render.text
